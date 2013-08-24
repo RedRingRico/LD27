@@ -1,5 +1,6 @@
 #include <Game.hpp>
 #include <System/Memory.hpp>
+#include <System/Time.hpp>
 #include <GitVersion.hpp>
 #include <cstring>
 
@@ -24,6 +25,12 @@ namespace LD27
 
 	ZED_UINT32 Game::Execute( )
 	{
+		ZED_UINT64	ElapsedTime = 0ULL;
+		ZED_UINT64	Accumulator = 0ULL;
+		ZED_UINT64	OldTime = ZED::System::GetTimeMiS( );
+		ZED_UINT64	FrameTime = ZED::System::GetTimeMiS( );
+		ZED_UINT64	TimeStep = 16667ULL;
+		ZED_MEMSIZE	FrameRate = 0;
 		ZED::System::ZED_WINDOWDATA WinData = m_pWindow->WindowData( );
 		char WindowTitle[ 1024 ] = "Red Ring Rico's Ludum Dare #27 Entry";
 #if defined ZED_BUILD_DEBUG
@@ -75,8 +82,34 @@ namespace LD27
 				continue;
 			}
 
-			this->Update( 16667 );
+			const ZED_UINT64 NewTime = ZED::System::GetTimeMiS( );
+			ZED_UINT64 DeltaTime = NewTime - OldTime;
+
+			if( DeltaTime > 250000ULL )
+			{
+				DeltaTime = 250000ULL;
+			}
+
+			OldTime = NewTime;
+			Accumulator += DeltaTime;
+
+			while( Accumulator >= TimeStep )
+			{
+				this->Update( TimeStep );
+
+				ElapsedTime += TimeStep;
+				Accumulator -= DeltaTime;
+			}
+
 			this->Render( );
+			++FrameRate;
+
+			if( ( NewTime - FrameTime ) > 1000000ULL )
+			{
+				zedTrace( "FPS: %d\n", FrameRate );
+				FrameTime = ZED::System::GetTimeMiS( );
+				FrameRate = 0;
+			}
 		}
 
 		return ZED_OK;
