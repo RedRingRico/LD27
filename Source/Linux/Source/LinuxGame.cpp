@@ -42,6 +42,11 @@ namespace LD27
 			X = ( NativeSize.Width / 2 ) - ( Width / 2 );
 			Y = ( NativeSize.Height / 2 ) - ( Height / 2 );
 #else
+			Width = 1280;
+			Height = 720;
+
+			X = ( NativeSize.Width / 2 ) - ( Width / 2 );
+			Y = ( NativeSize.Height / 2 ) - ( Height / 2 );
 #endif
 			WindowStyle |= ZED_WINDOW_STYLE_ALL;
 		}
