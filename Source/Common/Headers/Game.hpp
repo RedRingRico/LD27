@@ -5,6 +5,7 @@
 #include <Renderer/Renderer.hpp>
 #include <System/Window.hpp>
 #include <Renderer/CanvasDescription.hpp>
+#include <World.hpp>
 
 namespace LD27
 {
@@ -27,6 +28,8 @@ namespace LD27
 
 		ZED_BOOL	m_Running;
 		ZED_BOOL	m_FullScreen;
+
+		World	m_World;
 	};
 }
 

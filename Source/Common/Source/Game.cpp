@@ -56,6 +56,13 @@ namespace LD27
 
 		m_Running = ZED_TRUE;
 
+		if( m_World.Initialise( m_pRenderer ) != ZED_OK )
+		{
+			zedTrace( "[LD27::Game::Execute] <ERROR> "
+				"Failed to initialise the world\n" );
+			m_Running = ZED_FALSE;
+		}
+
 		while( m_Running )
 		{
 			m_pWindow->Update( );
@@ -117,7 +124,7 @@ namespace LD27
 
 	void Game::Update( const ZED_UINT64 p_ElapsedTime )
 	{
-
+		m_World.Update( p_ElapsedTime );
 	}
 
 	void Game::Render( )
