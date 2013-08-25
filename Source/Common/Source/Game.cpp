@@ -30,6 +30,7 @@ namespace LD27
 		ZED_UINT64	OldTime = ZED::System::GetTimeMiS( );
 		ZED_UINT64	FrameTime = ZED::System::GetTimeMiS( );
 		ZED_UINT64	TimeStep = 16667ULL;
+		ZED_UINT64	GameTime = 0ULL;
 		ZED_MEMSIZE	FrameRate = 0;
 		ZED::System::ZED_WINDOWDATA WinData = m_pWindow->WindowData( );
 		char WindowTitle[ 1024 ] = "Red Ring Rico's Ludum Dare #27 Entry";
@@ -106,6 +107,11 @@ namespace LD27
 
 				ElapsedTime += TimeStep;
 				Accumulator -= DeltaTime;
+
+				if( ElapsedTime >= 10000000ULL )
+				{
+					m_Running = ZED_FALSE;
+				}
 			}
 
 			this->Render( );
@@ -130,6 +136,7 @@ namespace LD27
 	void Game::Render( )
 	{
 		m_pRenderer->BeginScene( ZED_TRUE, ZED_TRUE, ZED_TRUE );
+		m_World.Render( );
 		m_pRenderer->EndScene( );
 	}
 }

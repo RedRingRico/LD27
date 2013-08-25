@@ -3,6 +3,7 @@
 
 #include <GameEntity.hpp>
 #include <Renderer/Model.hpp>
+#include <Renderer/Shader.hpp>
 
 namespace LD27
 {
@@ -20,6 +21,7 @@ namespace LD27
 	private:
 		ZED::Renderer::Model	*m_pModel;
 		ZED::Renderer::Renderer	*m_pRenderer;
+		ZED::Renderer::Shader	*m_pShader;
 	};
 }
 

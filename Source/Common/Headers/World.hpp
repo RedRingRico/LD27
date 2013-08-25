@@ -19,8 +19,14 @@ namespace LD27
 		void Update( const ZED_UINT64 p_ElapsedTime );
 		void Render( );
 
+		ZED_UINT32 LoadLevel( const ZED_CHAR8 *p_pFileName );
+
 	private:
-		std::list< GameEntity * >	m_Entities;
+
+		typedef std::list< GameEntity * > GameEntityList;
+		typedef std::list< GameEntity * >::iterator GameEntityItr;
+
+		GameEntityList				m_Entities;
 		ZED::Renderer::Renderer		*m_pRenderer;
 	};
 }
